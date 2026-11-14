@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaperFlow — Academic Methodology & System Architecture Studio</title>
+  <meta name="description" content="Modern interactive drawing tool for research paper methodologies, deep learning pipelines, and system architectures. Export 300 DPI PNG, SVG, and Draw.io formats.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="pf-header">
+    <div class="pf-brand">
+      <span class="pf-logo-badge">PF</span>
+      <span>PaperFlow Studio</span>
+    </div>
+
+    <!-- CENTER CONTROLS -->
+    <div class="pf-nav-controls">
+      <select id="template-select" class="pf-select" title="Load Academic Template">
+        <option value="" disabled>📁 Choose Academic Template...</option>
+        <option value="visionFramework" selected>📷 Deep Learning Vision Framework (Fig. 1)</option>
+        <option value="nlpSentiment">📝 NLP Sentiment Classification (Fig. 1)</option>
+        <option value="imageCaptioning">🖼️ Multimodal Caption Generator (Fig. 2)</option>
+        <option value="sovereignVoiceAI">🎙️ Sovereign Voice AI Engine</option>
+      </select>
+
+      <div class="pf-divider"></div>
+
+      <button id="btn-undo" class="pf-btn" title="Undo (Ctrl+Z)">↩ Undo</button>
+      <button id="btn-redo" class="pf-btn" title="Redo (Ctrl+Y)">↪ Redo</button>
+
+      <div class="pf-divider"></div>
+
+      <select id="theme-select" class="pf-select" title="Switch Theme">
+        <option value="light" selected>📄 Academic Paper (Light)</option>
+        <option value="dark">🌙 Modern Dark</option>
+        <option value="blueprint">📐 Engineering Blueprint</option>
+      </select>
+    </div>
+
+    <!-- RIGHT EXPORT CONTROLS -->
+    <div class="pf-nav-controls">
+      <button id="btn-export-png" class="pf-btn pf-btn-primary" title="Export 300 DPI PNG for IEEE/Springer papers">
+        🖼️ 300 DPI PNG
+      </button>
+      <button id="btn-export-svg" class="pf-btn" title="Export Vector SVG for LaTeX & Overleaf">
+        📐 Vector SVG
+      </button>
+      <button id="btn-export-drawio" class="pf-btn" title="Export Draw.io compatible XML">
+        💾 Draw.io (.drawio)
+      </button>
+      <button id="btn-export-json" class="pf-btn" title="Save Project File">
+        📦 Save
+      </button>
+      <label class="pf-btn" style="cursor: pointer;" title="Open Project File">
+        📂 Load
+        <input type="file" id="input-import-json" accept=".paperflow,.json" style="display: none;">
+      </label>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="pf-workspace">
+
+    <!-- LEFT PALETTE SIDEBAR -->
+    <aside class="pf-sidebar">
+      <div class="pf-sidebar-header">Academic Components</div>
+      <div class="pf-palette-list">
+        
+        <div class="pf-palette-item" data-type="dataset_input">
+          <div class="pf-palette-title">📷 Dataset Collection</div>
+          <div class="pf-palette-desc">Input images, classes, or raw corpus</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="preprocessing">
+          <div class="pf-palette-title">⚙️ Data Pre-Processing</div>
+          <div class="pf-palette-desc">Resize, augmentation, tokenization</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="feature_extraction">
+          <div class="pf-palette-title">🧠 Feature Extraction</div>
+          <div class="pf-palette-desc">Extractor weights, CBOW, embeddings</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="data_split">
+          <div class="pf-palette-title">🥧 Data Split (Pie Chart)</div>
+          <div class="pf-palette-desc">Train / validation / test partitioning</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="split_badge">
+          <div class="pf-palette-title">🏷️ Split Badge (Pill)</div>
+          <div class="pf-palette-desc">Training / Test Data callout pill</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="model_ensemble">
+          <div class="pf-palette-title">🧩 DL & ML Algorithms</div>
+          <div class="pf-palette-desc">Ensemble box (CNN, LSTM, VGG, SVM)</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="trained_model">
+          <div class="pf-palette-title">🎯 Trained Model</div>
+          <div class="pf-palette-desc">Optimized neural checkpoint</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="evaluation">
+          <div class="pf-palette-title">📊 Model Evaluation</div>
+          <div class="pf-palette-desc">Accuracy, Precision, Recall, F1</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="prediction">
+          <div class="pf-palette-title">📈 Prediction Output</div>
+          <div class="pf-palette-desc">Classification or caption inference</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="callout_note">
+          <div class="pf-palette-title">💬 Filter Rules Callout</div>
+          <div class="pf-palette-desc">Removing punctuations/stop words</div>
+        </div>
+
+        <div class="pf-palette-item" data-type="generic_card">
+          <div class="pf-palette-title">📦 Custom Card</div>
+          <div class="pf-palette-desc">Custom step with custom formulas</div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- CENTER SVG CANVAS -->
+    <div id="canvas-container" class="pf-canvas-container">
+      <!-- Injected via PaperCanvas -->
+    </div>
+
+    <!-- FLOATING ZOOM BAR -->
+    <div class="pf-floating-controls">
+      <button id="btn-zoom-out" class="pf-btn" title="Zoom Out (-)">−</button>
+      <button id="btn-zoom-reset" class="pf-btn" title="Reset Zoom">100%</button>
+      <button id="btn-zoom-in" class="pf-btn" title="Zoom In (+)">+</button>
+    </div>
+
+    <!-- RIGHT PROPERTIES INSPECTOR -->
+    <aside id="properties-inspector" class="pf-inspector">
+      <div class="pf-inspector-title">
+        <span>Component Properties</span>
+      </div>
+
+      <div id="inspector-empty" class="pf-empty-state">
+        <p>Select any step or block on the canvas to customize its labels, colors, and parameters.</p>
+      </div>
+
+      <div id="inspector-form" style="display: none;">
+        <div class="pf-prop-group">
+          <label class="pf-prop-label">Block Title</label>
+          <input type="text" id="prop-title" class="pf-prop-input" placeholder="e.g. Data Collection">
+        </div>
+
+        <div class="pf-prop-group">
+          <label class="pf-prop-label">Subtitle / Description</label>
+          <input type="text" id="prop-subtitle" class="pf-prop-input" placeholder="e.g. Image Normalization">
+        </div>
+
+        <div class="pf-prop-group">
+          <label class="pf-prop-label">Border Color Accent</label>
+          <div id="prop-colors" class="pf-color-palette">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <div id="prop-custom-fields" class="pf-prop-group">
+          <!-- Injected dynamically based on node type -->
+        </div>
+
+        <div class="pf-prop-group" style="display: flex; gap: 8px; margin-top: 20px;">
+          <button id="btn-duplicate-node" class="pf-btn" style="flex: 1;">Duplicate (Ctrl+D)</button>
+          <button id="btn-delete-node" class="pf-btn" style="flex: 1; border-color: #ef4444; color: #ef4444;">Delete</button>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="js/config.js"></script>
+  <script src="js/nodes.js"></script>
+  <script src="js/connectors.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
