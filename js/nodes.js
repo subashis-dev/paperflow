@@ -1,6 +1,6 @@
 /**
- * PaperFlow — Node Models & Academic Visual Components
- * Handles node creation, dimension calculation, and SVG/DOM visual rendering.
+ * PaperFlow — Node Models & Visual Components
+ * Provides clean architectural components with icon support and customizable properties.
  */
 
 class NodeManager {
@@ -13,13 +13,14 @@ class NodeManager {
       type,
       x: Math.round(x / CONFIG.canvas.gridSize) * CONFIG.canvas.gridSize,
       y: Math.round(y / CONFIG.canvas.gridSize) * CONFIG.canvas.gridSize,
-      width: defaults.width || 180,
-      height: defaults.height || 140,
-      title: defaults.title || "Step",
-      subtitle: defaults.subtitle || "",
-      borderColor: defaults.borderColor || "#f59e0b",
+      width: customProps.width || defaults.width || 180,
+      height: customProps.height || defaults.height || 140,
+      title: customProps.title || defaults.title || "Step",
+      subtitle: customProps.subtitle || defaults.subtitle || "",
+      icon: customProps.icon || defaults.icon || "⚙️",
+      borderColor: customProps.borderColor || defaults.borderColor || "#f59e0b",
       bgColor: defaults.bgColor || "transparent",
-      data: { ...defaults.data, ...customProps.data },
+      data: { ...defaults.data, ...customProps.data, icon: customProps.icon || defaults.icon || "⚙️" },
       ...customProps
     };
   }
@@ -28,93 +29,88 @@ class NodeManager {
     switch (type) {
       case CONFIG.nodeTypes.DATASET_INPUT:
         return {
-          title: "Dataset Collection",
-          subtitle: "Input Data",
-          width: 200,
-          height: 180,
+          title: "Input / Data Source",
+          subtitle: "Dataset or Inputs",
+          icon: "🗄️",
+          width: 180,
+          height: 140,
           borderColor: "#f59e0b",
           data: {
-            inputType: "image", // "image" | "audio" | "text" | "dataset_classes"
-            classes: ["Bell pepper", "Potato", "Tomato", "Rice", "Corn"],
-            datasetCount: "12,450 samples",
-            icon: "image"
+            icon: "🗄️",
+            classes: ["Item 1", "Item 2", "Item 3"]
           }
         };
 
       case CONFIG.nodeTypes.PREPROCESSING:
         return {
-          title: "Data Pre-Processing",
-          subtitle: "Cleaning & Normalization",
-          width: 190,
-          height: 160,
+          title: "Process Step",
+          subtitle: "Transform / Normalization",
+          icon: "⚙️",
+          width: 180,
+          height: 140,
           borderColor: "#10b981",
           data: {
-            steps: ["Rescaling / Resize", "Parameter Set", "Data Augmentation", "Gray Scaling"],
-            icon: "sliders"
+            icon: "⚙️",
+            steps: ["Operation 1", "Operation 2", "Operation 3"]
           }
         };
 
       case CONFIG.nodeTypes.FEATURE_EXTRACTION:
         return {
-          title: "Feature Extraction",
+          title: "Feature Extractor",
           subtitle: "Representation Learning",
-          width: 190,
-          height: 160,
+          icon: "🧠",
+          width: 180,
+          height: 140,
           borderColor: "#8b5cf6",
           data: {
-            method: "Deep Feature Extractor",
-            details: ["Setting Weights", "Input Shape (224, 224, 3)", "Feature Dimension: 768"],
-            nlpType: "CBOW / Skip-Gram",
-            icon: "cpu"
+            icon: "🧠",
+            details: ["Dimension: D", "Weights / Embeddings"]
           }
         };
 
       case CONFIG.nodeTypes.DATA_SPLIT:
         return {
           title: "Data Split",
-          subtitle: "Cross-Validation Partition",
+          subtitle: "Partition Ratio",
+          icon: "🥧",
           width: 160,
           height: 150,
           borderColor: "#d97706",
           data: {
-            ratio: "80 / 20 Split",
-            pie: [
-              { label: "Train", pct: 80, color: "#ef4444" },
-              { label: "Test", pct: 20, color: "#3b82f6" }
-            ],
-            icon: "pie-chart"
+            icon: "🥧",
+            ratio: "80 / 20 Split"
           }
         };
 
       case CONFIG.nodeTypes.SPLIT_BADGE:
         return {
-          title: "Training Data",
+          title: "Subset Badge",
           subtitle: "",
+          icon: "🏷️",
           width: 130,
           height: 44,
           borderColor: "#ef4444",
           data: {
-            variant: "red", // "red" | "blue" | "green"
-            icon: "database"
+            icon: "🏷️",
+            variant: "red"
           }
         };
 
       case CONFIG.nodeTypes.MODEL_ENSEMBLE:
         return {
-          title: "DL & ML Algorithms",
-          subtitle: "Model Suite & Ensembles",
-          width: 320,
-          height: 140,
+          title: "Model Ensemble",
+          subtitle: "Candidate Models",
+          icon: "💻",
+          width: 280,
+          height: 130,
           borderColor: "#dc2626",
           data: {
-            icon: "hard-drive",
+            icon: "💻",
             algorithms: [
-              { name: "CNN", color: "#f59e0b" },
-              { name: "LSTM", color: "#3b82f6" },
-              { name: "VGG-19", color: "#8b5cf6" },
-              { name: "MobileNet", color: "#10b981" },
-              { name: "EfficientNet", color: "#ec4899" },
-              { name: "SVM", color: "#6366f1" }
+              { name: "Model A", color: "#f59e0b" },
+              { name: "Model B", color: "#3b82f6" },
+              { name: "Model C", color: "#10b981" }
             ]
           }
         };
@@ -122,144 +118,139 @@ class NodeManager {
       case CONFIG.nodeTypes.TRAINED_MODEL:
         return {
           title: "Trained Model",
-          subtitle: "Optimized Weights",
-          width: 190,
-          height: 130,
+          subtitle: "Optimized Checkpoint",
+          icon: "🎯",
+          width: 180,
+          height: 120,
           borderColor: "#e11d48",
           data: {
-            modelName: "EfficientNetB3 (Trained)",
-            accuracySummary: "Val Acc: 98.6%",
-            icon: "check-circle"
+            icon: "🎯",
+            modelName: "Model Checkpoint",
+            accuracySummary: "Performance Score"
           }
         };
 
       case CONFIG.nodeTypes.EVALUATION:
         return {
-          title: "Model Evaluation",
-          subtitle: "Performance Metrics",
+          title: "Evaluation Metrics",
+          subtitle: "Test Results",
+          icon: "📊",
           width: 180,
-          height: 170,
+          height: 150,
           borderColor: "#059669",
           data: {
-            icon: "search",
+            icon: "📊",
             metrics: [
-              { name: "Accuracy", value: "98.4%" },
-              { name: "Precision", value: "97.8%" },
-              { name: "Recall", value: "98.1%" },
-              { name: "F1 Score", value: "97.9%" }
+              { name: "Metric 1", value: "98.2%" },
+              { name: "Metric 2", value: "96.5%" }
             ]
           }
         };
 
       case CONFIG.nodeTypes.PREDICTION:
         return {
-          title: "Prediction Output",
-          subtitle: "Inference Result",
+          title: "Inference Output",
+          subtitle: "Target Output",
+          icon: "📈",
           width: 180,
           height: 130,
           borderColor: "#10b981",
           data: {
-            icon: "trending-up",
+            icon: "📈",
             outputs: [
-              { label: "Positive Class", color: "#10b981", arrow: "up" },
-              { label: "Negative Class", color: "#ef4444", arrow: "down" }
+              { label: "Class / State A", color: "#10b981", arrow: "up" },
+              { label: "Class / State B", color: "#ef4444", arrow: "down" }
             ]
           }
         };
 
       case CONFIG.nodeTypes.CALLOUT_NOTE:
         return {
-          title: "Filter Callout",
+          title: "Note / Annotation",
           subtitle: "",
-          width: 190,
-          height: 150,
+          icon: "💬",
+          width: 180,
+          height: 130,
           borderColor: "#10b981",
           data: {
-            title: "Pre-processing Notes",
-            lines: [
-              "Removing:",
-              "• punctuations & symbols",
-              "• stop words & emojis",
-              "Applying:",
-              "• Porter stemmer",
-              "• Subword tokenizer"
-            ]
+            icon: "💬",
+            lines: ["• Note item 1", "• Note item 2"]
           }
         };
 
       case CONFIG.nodeTypes.STAGE_CONTAINER:
         return {
-          title: "Section Group Container",
-          subtitle: "Grouping Module",
-          width: 520,
-          height: 380,
+          title: "Pipeline Container",
+          subtitle: "Stage Group",
+          icon: "🗂️",
+          width: 500,
+          height: 350,
           borderColor: "#8b5cf6",
           data: {
-            sectionHeader: "Preprocessing Pipeline",
+            icon: "🗂️",
+            sectionHeader: "Pipeline Stage Group",
             isGroup: true
           }
         };
 
       case CONFIG.nodeTypes.FUNNEL_STAGE:
         return {
-          title: "Stage 2 — Screening & Filtering",
-          subtitle: "Screen unsuitable conditions and visual criteria",
-          width: 480,
+          title: "Funnel Filter Stage",
+          subtitle: "Screening Criteria",
+          icon: "🌪️",
+          width: 460,
           height: 85,
           borderColor: "#8b5cf6",
           data: {
-            stageNum: "Stage 2",
-            stageTitle: "Classification & Screening",
-            criteria: "Category • Properties • Screening Criteria",
-            funnelSteps: ["50,000 Ingestion", "24,000 Filtered", "500 Selected"],
-            icon: "brain"
+            icon: "🌪️",
+            criteria: "Category • Conditions • Threshold",
+            funnelSteps: ["Ingestion", "Filtered", "Selected"]
           }
         };
 
       case CONFIG.nodeTypes.BRANCHING_AB:
         return {
-          title: "Stage 6 — Identity-Oriented Generation",
-          subtitle: "Comparison of dual model pathways",
-          width: 480,
+          title: "Dual-Branch Comparison",
+          subtitle: "Comparative Evaluation",
+          icon: "⚖️",
+          width: 460,
           height: 105,
           borderColor: "#3b82f6",
           data: {
-            stageNum: "Stage 6",
-            stageTitle: "Dual-Branch Comparison",
-            branchA: { name: "Branch A: Model Architecture A", count: "100 Generated Samples" },
-            branchB: { name: "Branch B: Model Architecture B", count: "100 Generated Samples" },
-            totalBanner: "Total: 200 Generated Samples",
-            icon: "wand"
+            icon: "⚖️",
+            branchA: { name: "Branch A", count: "Count / Detail" },
+            branchB: { name: "Branch B", count: "Count / Detail" },
+            totalBanner: "Total Combined"
           }
         };
 
       case CONFIG.nodeTypes.EXPERIMENT_CARD:
         return {
-          title: "Experiment 1 — Human Perception Study",
+          title: "Perception / Study Card",
           subtitle: "",
-          width: 235,
-          height: 145,
+          icon: "👤",
+          width: 220,
+          height: 140,
           borderColor: "#0284c7",
           data: {
-            expNum: "Experiment 1",
-            expTitle: "Perceptual Quality",
-            inputRef: "Input: Stage 6 Outputs",
-            sampleCount: "200 samples • Side-by-side shown",
-            questionPrompt: "Question: Does sample look authentic? — Yes / No",
-            icon: "user"
+            icon: "👤",
+            inputRef: "Input Source",
+            sampleCount: "Sample configuration",
+            questionPrompt: "Question: Meets quality criteria? — Yes / No"
           }
         };
 
       case CONFIG.nodeTypes.WIDE_STAGE:
         return {
-          title: "Stage 1 — Primary Source Dataset",
+          title: "Primary Dataset Stage",
           subtitle: "",
-          width: 480,
+          icon: "🗄️",
+          width: 460,
           height: 65,
           borderColor: "#334155",
           data: {
-            bullets: ["~1.2M Samples", "~100,000 Classes / Identities", "High-Resolution Tensors"],
-            icon: "database"
+            icon: "🗄️",
+            bullets: ["• Samples / Items", "• Classes / Categories", "• Format & Specifications"]
           }
         };
 
@@ -267,13 +258,14 @@ class NodeManager {
       default:
         return {
           title: "Process Step",
-          subtitle: "Custom Block",
+          subtitle: "Description",
+          icon: "📦",
           width: 180,
           height: 120,
           borderColor: "#6366f1",
           data: {
-            description: "Custom methodology component description or formulas.",
-            icon: "box"
+            icon: "📦",
+            description: "Custom step description or parameters."
           }
         };
     }

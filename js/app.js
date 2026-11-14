@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvasContainer = document.getElementById("canvas-container");
   const canvas = new PaperCanvas(canvasContainer);
 
-  // Load default template on first visit (Deep Learning Vision Framework)
-  canvas.loadTemplate("visionFramework");
+  // Start with a clean, blank canvas
+  canvas.loadTemplate("blank");
 
   // Hook global canvas selection change to update the Properties Inspector
   window.onCanvasSelectionChange = selectedNode => {
@@ -125,9 +125,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputWidth = document.getElementById("prop-width");
   const inputHeight = document.getElementById("prop-height");
   const colorPickerContainer = document.getElementById("prop-colors");
+  const iconPickerContainer = document.getElementById("prop-icon-picker");
   const btnDeleteNode = document.getElementById("btn-delete-node");
   const btnDuplicateNode = document.getElementById("btn-duplicate-node");
   const customFieldsContainer = document.getElementById("prop-custom-fields");
+
+  // Render Icon Picker
+  if (iconPickerContainer && CONFIG.icons) {
+    iconPickerContainer.innerHTML = "";
+    CONFIG.icons.forEach(item => {
+      const btn = document.createElement("button");
+      btn.className = "pf-icon-btn";
+      btn.textContent = item.icon;
+      btn.title = item.label;
+      btn.addEventListener("click", () => {
+        const node = canvas.getSelectedNode();
+        if (node) {
+          node.icon = item.icon;
+          if (!node.data) node.data = {};
+          node.data.icon = item.icon;
+          document.querySelectorAll(".pf-icon-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          canvas.saveState();
+          canvas.render();
+        }
+      });
+      iconPickerContainer.appendChild(btn);
+    });
+  }
 
   // Render Color Swatches
   if (colorPickerContainer) {
@@ -163,6 +188,18 @@ document.addEventListener("DOMContentLoaded", () => {
     inputSub.value = node.subtitle || "";
     if (inputWidth) inputWidth.value = node.width || 180;
     if (inputHeight) inputHeight.value = node.height || 140;
+
+    // Highlight active icon
+    if (iconPickerContainer) {
+      const activeIcon = node.icon || (node.data && node.data.icon);
+      document.querySelectorAll(".pf-icon-btn").forEach(btn => {
+        if (btn.textContent === activeIcon) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
 
     // Dynamic fields by node type
     renderCustomFields(node);

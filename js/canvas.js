@@ -233,11 +233,24 @@ class PaperCanvas {
       return;
     }
 
+    // Node Icon
+    const icon = node.icon || (node.data && node.data.icon);
+    const hasIcon = !!icon && node.type !== CONFIG.nodeTypes.STAGE_CONTAINER && node.type !== CONFIG.nodeTypes.WIDE_STAGE && node.type !== CONFIG.nodeTypes.FUNNEL_STAGE && node.type !== CONFIG.nodeTypes.BRANCHING_AB;
+
+    if (hasIcon) {
+      const iconEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      iconEl.setAttribute("x", "14");
+      iconEl.setAttribute("y", "28");
+      iconEl.setAttribute("font-size", "15");
+      iconEl.textContent = icon;
+      group.appendChild(iconEl);
+    }
+
     // Header Title
     const titleText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    titleText.setAttribute("x", node.width / 2);
+    titleText.setAttribute("x", hasIcon ? "36" : node.width / 2);
     titleText.setAttribute("y", "26");
-    titleText.setAttribute("text-anchor", "middle");
+    titleText.setAttribute("text-anchor", hasIcon ? "start" : "middle");
     titleText.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
     titleText.setAttribute("font-size", "13");
     titleText.setAttribute("font-weight", "700");
@@ -248,9 +261,9 @@ class PaperCanvas {
     // Subtitle
     if (node.subtitle) {
       const sub = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      sub.setAttribute("x", node.width / 2);
+      sub.setAttribute("x", hasIcon ? "36" : node.width / 2);
       sub.setAttribute("y", "42");
-      sub.setAttribute("text-anchor", "middle");
+      sub.setAttribute("text-anchor", hasIcon ? "start" : "middle");
       sub.setAttribute("font-family", "system-ui, sans-serif");
       sub.setAttribute("font-size", "10");
       sub.setAttribute("fill", subColor);
@@ -466,19 +479,28 @@ class PaperCanvas {
   }
 
   _renderStageContainer(group, node) {
+    const icon = node.icon || (node.data && node.data.icon) || "🗂️";
     const header = document.createElementNS("http://www.w3.org/2000/svg", "text");
     header.setAttribute("x", node.width / 2);
     header.setAttribute("y", "28");
     header.setAttribute("text-anchor", "middle");
     header.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
-    header.setAttribute("font-size", "16");
+    header.setAttribute("font-size", "15");
     header.setAttribute("font-weight", "800");
     header.setAttribute("fill", node.borderColor);
-    header.textContent = (node.data && node.data.sectionHeader) ? node.data.sectionHeader : node.title;
+    header.textContent = `${icon}  ${(node.data && node.data.sectionHeader) ? node.data.sectionHeader : node.title}`;
     group.appendChild(header);
   }
 
   _renderFunnelStage(group, node, textColor, subColor) {
+    const icon = node.icon || (node.data && node.data.icon) || "🌪️";
+    const iconEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    iconEl.setAttribute("x", "16");
+    iconEl.setAttribute("y", "32");
+    iconEl.setAttribute("font-size", "18");
+    iconEl.textContent = icon;
+    group.appendChild(iconEl);
+
     const stageTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
     stageTxt.setAttribute("x", "48");
     stageTxt.setAttribute("y", "26");
@@ -514,6 +536,14 @@ class PaperCanvas {
   }
 
   _renderBranchingAB(group, node, textColor, subColor, isDark) {
+    const icon = node.icon || (node.data && node.data.icon) || "⚖️";
+    const iconEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    iconEl.setAttribute("x", "16");
+    iconEl.setAttribute("y", "32");
+    iconEl.setAttribute("font-size", "18");
+    iconEl.textContent = icon;
+    group.appendChild(iconEl);
+
     const stageTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
     stageTxt.setAttribute("x", "44");
     stageTxt.setAttribute("y", "24");
@@ -591,8 +621,16 @@ class PaperCanvas {
   }
 
   _renderExperimentCard(group, node, textColor, subColor) {
+    const icon = node.icon || (node.data && node.data.icon) || "👤";
+    const iconEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    iconEl.setAttribute("x", "14");
+    iconEl.setAttribute("y", "26");
+    iconEl.setAttribute("font-size", "14");
+    iconEl.textContent = icon;
+    group.appendChild(iconEl);
+
     const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    title.setAttribute("x", "16");
+    title.setAttribute("x", "34");
     title.setAttribute("y", "26");
     title.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
     title.setAttribute("font-size", "12");
@@ -640,6 +678,14 @@ class PaperCanvas {
   }
 
   _renderWideStage(group, node, textColor, subColor) {
+    const icon = node.icon || (node.data && node.data.icon) || "🗄️";
+    const iconEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    iconEl.setAttribute("x", "20");
+    iconEl.setAttribute("y", "38");
+    iconEl.setAttribute("font-size", "20");
+    iconEl.textContent = icon;
+    group.appendChild(iconEl);
+
     const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
     title.setAttribute("x", node.width / 2);
     title.setAttribute("y", "28");

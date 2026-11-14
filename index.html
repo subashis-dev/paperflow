@@ -19,12 +19,10 @@
 
     <!-- CENTER CONTROLS -->
     <div class="pf-nav-controls">
-      <select id="template-select" class="pf-select" title="Load Academic Template">
-        <option value="" disabled>📁 Choose Academic Template...</option>
-        <option value="visionFramework" selected>📷 Deep Learning Vision Framework (Fig. 1)</option>
-        <option value="nlpSentiment">📝 NLP Sentiment Classification (Fig. 1)</option>
-        <option value="imageCaptioning">🖼️ Multimodal Caption Generator (Fig. 2)</option>
-        <option value="sovereignVoiceAI">🎙️ Sovereign Voice AI Engine</option>
+      <select id="template-select" class="pf-select" title="Diagram Layout">
+        <option value="blank" selected>✨ Blank Canvas (New)</option>
+        <option value="linear">➡️ 3-Step Pipeline Flow</option>
+        <option value="branching">🔀 Parallel Branching Flow</option>
       </select>
 
       <div class="pf-divider"></div>
@@ -67,91 +65,91 @@
 
     <!-- LEFT PALETTE SIDEBAR -->
     <aside class="pf-sidebar">
-      <div class="pf-sidebar-header">Academic Components</div>
+      <div class="pf-sidebar-header">Shapes & Icons Palette</div>
       <div class="pf-palette-list">
         
-        <div class="pf-palette-item" data-type="dataset_input">
-          <div class="pf-palette-title">📷 Dataset Collection</div>
-          <div class="pf-palette-desc">Input images, classes, or raw corpus</div>
+        <div class="pf-palette-item" data-type="preprocessing">
+          <div class="pf-palette-title">⚙️ Process Step</div>
+          <div class="pf-palette-desc">Computation & transform step</div>
         </div>
 
-        <div class="pf-palette-item" data-type="preprocessing">
-          <div class="pf-palette-title">⚙️ Data Pre-Processing</div>
-          <div class="pf-palette-desc">Resize, augmentation, tokenization</div>
+        <div class="pf-palette-item" data-type="dataset_input">
+          <div class="pf-palette-title">🗄️ Data / Input Box</div>
+          <div class="pf-palette-desc">Data source or input tensor</div>
         </div>
 
         <div class="pf-palette-item" data-type="feature_extraction">
-          <div class="pf-palette-title">🧠 Feature Extraction</div>
-          <div class="pf-palette-desc">Extractor weights, CBOW, embeddings</div>
+          <div class="pf-palette-title">🧠 Model / Algorithm</div>
+          <div class="pf-palette-desc">Architecture or feature model</div>
         </div>
 
         <div class="pf-palette-item" data-type="data_split">
           <div class="pf-palette-title">🥧 Data Split (Pie Chart)</div>
-          <div class="pf-palette-desc">Train / validation / test partitioning</div>
+          <div class="pf-palette-desc">Partition ratio chart</div>
         </div>
 
         <div class="pf-palette-item" data-type="split_badge">
-          <div class="pf-palette-title">🏷️ Split Badge (Pill)</div>
-          <div class="pf-palette-desc">Training / Test Data callout pill</div>
+          <div class="pf-palette-title">🏷️ Label Badge / Pill</div>
+          <div class="pf-palette-desc">Compact status or data tag</div>
         </div>
 
         <div class="pf-palette-item" data-type="model_ensemble">
-          <div class="pf-palette-title">🧩 DL & ML Algorithms</div>
-          <div class="pf-palette-desc">Ensemble box (CNN, LSTM, VGG, SVM)</div>
+          <div class="pf-palette-title">💻 Algorithm Suite</div>
+          <div class="pf-palette-desc">Candidate model comparison box</div>
         </div>
 
         <div class="pf-palette-item" data-type="trained_model">
-          <div class="pf-palette-title">🎯 Trained Model</div>
-          <div class="pf-palette-desc">Optimized neural checkpoint</div>
+          <div class="pf-palette-title">🎯 Trained Checkpoint</div>
+          <div class="pf-palette-desc">Optimized checkpoint box</div>
         </div>
 
         <div class="pf-palette-item" data-type="evaluation">
-          <div class="pf-palette-title">📊 Model Evaluation</div>
-          <div class="pf-palette-desc">Accuracy, Precision, Recall, F1</div>
+          <div class="pf-palette-title">📊 Evaluation & Metrics</div>
+          <div class="pf-palette-desc">Metric score checklist</div>
         </div>
 
         <div class="pf-palette-item" data-type="prediction">
-          <div class="pf-palette-title">📈 Prediction Output</div>
-          <div class="pf-palette-desc">Classification or caption inference</div>
+          <div class="pf-palette-title">📈 Output / Inference</div>
+          <div class="pf-palette-desc">Target outcome card</div>
         </div>
 
         <div class="pf-palette-item" data-type="callout_note">
-          <div class="pf-palette-title">💬 Filter Rules Callout</div>
-          <div class="pf-palette-desc">Removing punctuations/stop words</div>
+          <div class="pf-palette-title">💬 Annotation Note</div>
+          <div class="pf-palette-desc">Callout notes & rules</div>
         </div>
 
         <div style="margin: 12px 0 4px; padding-top: 8px; border-top: 1px dashed var(--border-color); font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.05em;">
-          Multi-Stage Pipeline Blocks
+          Pipeline Structures
         </div>
 
         <div class="pf-palette-item" data-type="stage_container">
-          <div class="pf-palette-title">🗂️ Section Group Container</div>
-          <div class="pf-palette-desc">Large container framing sub-stages</div>
+          <div class="pf-palette-title">🗂️ Stage Container</div>
+          <div class="pf-palette-desc">Bounding group framing sub-stages</div>
         </div>
 
         <div class="pf-palette-item" data-type="wide_stage">
-          <div class="pf-palette-title">🗄️ Wide Dataset Banner</div>
-          <div class="pf-palette-desc">Horizontal source dataset banner</div>
+          <div class="pf-palette-title">📏 Wide Stage Banner</div>
+          <div class="pf-palette-desc">Horizontal banner card</div>
         </div>
 
         <div class="pf-palette-item" data-type="funnel_stage">
-          <div class="pf-palette-title">🌪️ Funnel Screening Stage</div>
-          <div class="pf-palette-desc">Count metric transition filter</div>
+          <div class="pf-palette-title">🌪️ Funnel Filter Card</div>
+          <div class="pf-palette-desc">Multi-step reduction flow</div>
         </div>
 
         <div class="pf-palette-item" data-type="branching_ab">
-          <div class="pf-palette-title">⚖️ A/B Branching Comparison</div>
-          <div class="pf-palette-desc">Dual model parallel generation</div>
+          <div class="pf-palette-title">⚖️ A/B Comparison Card</div>
+          <div class="pf-palette-desc">Dual parallel branch comparison</div>
         </div>
 
         <div class="pf-palette-item" data-type="experiment_card">
-          <div class="pf-palette-title">👤 Perception Experiment</div>
-          <div class="pf-palette-desc">User study / evaluation question</div>
+          <div class="pf-palette-title">👤 Evaluation Study Card</div>
+          <div class="pf-palette-desc">Study card with question prompt</div>
         </div>
 
         <div class="pf-palette-item" data-type="generic_card">
           <div class="pf-palette-title">📦 Custom Card</div>
-          <div class="pf-palette-desc">Custom step with custom formulas</div>
+          <div class="pf-palette-desc">Generic card with custom icon</div>
         </div>
 
       </div>
@@ -176,18 +174,27 @@
       </div>
 
       <div id="inspector-empty" class="pf-empty-state">
-        <p>Select any step or block on the canvas to customize its labels, colors, and parameters.</p>
+        <p>Select any step or block on the canvas to customize its icon, title, colors, and parameters.</p>
       </div>
 
       <div id="inspector-form" style="display: none;">
+        
+        <!-- ICON PICKER -->
+        <div class="pf-prop-group">
+          <label class="pf-prop-label">Select Icon</label>
+          <div id="prop-icon-picker" class="pf-icon-picker">
+            <!-- Injected dynamically from CONFIG.icons -->
+          </div>
+        </div>
+
         <div class="pf-prop-group">
           <label class="pf-prop-label">Block Title</label>
-          <input type="text" id="prop-title" class="pf-prop-input" placeholder="e.g. Data Collection">
+          <input type="text" id="prop-title" class="pf-prop-input" placeholder="e.g. Process Step">
         </div>
 
         <div class="pf-prop-group">
           <label class="pf-prop-label">Subtitle / Description</label>
-          <input type="text" id="prop-subtitle" class="pf-prop-input" placeholder="e.g. Image Normalization">
+          <input type="text" id="prop-subtitle" class="pf-prop-input" placeholder="e.g. Custom Transform">
         </div>
 
         <div class="pf-prop-group" style="display: flex; gap: 8px;">

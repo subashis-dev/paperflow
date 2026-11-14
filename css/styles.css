@@ -270,6 +270,43 @@ body {
   transform: scale(1.15);
 }
 
+/* Icon Picker Grid */
+.pf-icon-picker {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  max-height: 140px;
+  overflow-y: auto;
+  padding: 6px;
+  background-color: #0b0f19;
+  border: 1px solid #334155;
+  border-radius: 6px;
+}
+
+.pf-icon-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.pf-icon-btn:hover {
+  background-color: #1e293b;
+  border-color: #6366f1;
+  transform: scale(1.15);
+}
+
+.pf-icon-btn.active {
+  background-color: #312e81;
+  border-color: #6366f1;
+}
+
 .pf-empty-state {
   text-align: center;
   color: var(--text-secondary);
