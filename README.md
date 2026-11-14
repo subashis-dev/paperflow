@@ -54,3 +54,9 @@ Visit **[http://localhost:8080](http://localhost:8080)**.
 3. Under **Branch**, select `main` and folder `/ (root)`.
 4. Click **Save** — your studio is instantly live at:
    👉 **`https://subashis-dev.github.io/paperflow/`**
+
+---
+
+## 📄 License
+
+This project is open-source under the [MIT License](LICENSE). Copyright © 2026 Subashis Roy Bhowmik.
