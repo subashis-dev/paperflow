@@ -187,6 +187,82 @@ class NodeManager {
           }
         };
 
+      case CONFIG.nodeTypes.STAGE_CONTAINER:
+        return {
+          title: "Section Group Container",
+          subtitle: "Grouping Module",
+          width: 520,
+          height: 380,
+          borderColor: "#8b5cf6",
+          data: {
+            sectionHeader: "Preprocessing Pipeline",
+            isGroup: true
+          }
+        };
+
+      case CONFIG.nodeTypes.FUNNEL_STAGE:
+        return {
+          title: "Stage 2 — Screening & Filtering",
+          subtitle: "Screen unsuitable conditions and visual criteria",
+          width: 480,
+          height: 85,
+          borderColor: "#8b5cf6",
+          data: {
+            stageNum: "Stage 2",
+            stageTitle: "Classification & Screening",
+            criteria: "Category • Properties • Screening Criteria",
+            funnelSteps: ["50,000 Ingestion", "24,000 Filtered", "500 Selected"],
+            icon: "brain"
+          }
+        };
+
+      case CONFIG.nodeTypes.BRANCHING_AB:
+        return {
+          title: "Stage 6 — Identity-Oriented Generation",
+          subtitle: "Comparison of dual model pathways",
+          width: 480,
+          height: 105,
+          borderColor: "#3b82f6",
+          data: {
+            stageNum: "Stage 6",
+            stageTitle: "Dual-Branch Comparison",
+            branchA: { name: "Branch A: Model Architecture A", count: "100 Generated Samples" },
+            branchB: { name: "Branch B: Model Architecture B", count: "100 Generated Samples" },
+            totalBanner: "Total: 200 Generated Samples",
+            icon: "wand"
+          }
+        };
+
+      case CONFIG.nodeTypes.EXPERIMENT_CARD:
+        return {
+          title: "Experiment 1 — Human Perception Study",
+          subtitle: "",
+          width: 235,
+          height: 145,
+          borderColor: "#0284c7",
+          data: {
+            expNum: "Experiment 1",
+            expTitle: "Perceptual Quality",
+            inputRef: "Input: Stage 6 Outputs",
+            sampleCount: "200 samples • Side-by-side shown",
+            questionPrompt: "Question: Does sample look authentic? — Yes / No",
+            icon: "user"
+          }
+        };
+
+      case CONFIG.nodeTypes.WIDE_STAGE:
+        return {
+          title: "Stage 1 — Primary Source Dataset",
+          subtitle: "",
+          width: 480,
+          height: 65,
+          borderColor: "#334155",
+          data: {
+            bullets: ["~1.2M Samples", "~100,000 Classes / Identities", "High-Resolution Tensors"],
+            icon: "database"
+          }
+        };
+
       case CONFIG.nodeTypes.GENERIC_CARD:
       default:
         return {

@@ -268,7 +268,17 @@ class PaperCanvas {
     group.appendChild(line);
 
     // Inner Body rendering by type
-    if (node.type === CONFIG.nodeTypes.DATA_SPLIT) {
+    if (node.type === CONFIG.nodeTypes.STAGE_CONTAINER) {
+      this._renderStageContainer(group, node);
+    } else if (node.type === CONFIG.nodeTypes.FUNNEL_STAGE) {
+      this._renderFunnelStage(group, node, textColor, subColor);
+    } else if (node.type === CONFIG.nodeTypes.BRANCHING_AB) {
+      this._renderBranchingAB(group, node, textColor, subColor, isDark);
+    } else if (node.type === CONFIG.nodeTypes.EXPERIMENT_CARD) {
+      this._renderExperimentCard(group, node, textColor, subColor);
+    } else if (node.type === CONFIG.nodeTypes.WIDE_STAGE) {
+      this._renderWideStage(group, node, textColor, subColor);
+    } else if (node.type === CONFIG.nodeTypes.DATA_SPLIT) {
       this._renderPieChart(group, node);
     } else if (node.type === CONFIG.nodeTypes.PREPROCESSING && node.data && node.data.steps) {
       this._renderBulletList(group, node, node.data.steps, subColor);
@@ -453,6 +463,203 @@ class PaperCanvas {
       txt.textContent = l;
       group.appendChild(txt);
     });
+  }
+
+  _renderStageContainer(group, node) {
+    const header = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    header.setAttribute("x", node.width / 2);
+    header.setAttribute("y", "28");
+    header.setAttribute("text-anchor", "middle");
+    header.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
+    header.setAttribute("font-size", "16");
+    header.setAttribute("font-weight", "800");
+    header.setAttribute("fill", node.borderColor);
+    header.textContent = (node.data && node.data.sectionHeader) ? node.data.sectionHeader : node.title;
+    group.appendChild(header);
+  }
+
+  _renderFunnelStage(group, node, textColor, subColor) {
+    const stageTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    stageTxt.setAttribute("x", "48");
+    stageTxt.setAttribute("y", "26");
+    stageTxt.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
+    stageTxt.setAttribute("font-size", "13");
+    stageTxt.setAttribute("font-weight", "700");
+    stageTxt.setAttribute("fill", textColor);
+    stageTxt.textContent = node.title;
+    group.appendChild(stageTxt);
+
+    if (node.subtitle) {
+      const crit = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      crit.setAttribute("x", "48");
+      crit.setAttribute("y", "44");
+      crit.setAttribute("font-size", "11");
+      crit.setAttribute("font-family", "system-ui, sans-serif");
+      crit.setAttribute("fill", subColor);
+      crit.textContent = node.subtitle;
+      group.appendChild(crit);
+    }
+
+    const steps = (node.data && node.data.funnelSteps) ? node.data.funnelSteps : ["Input", "Filtered", "Selected"];
+    const funnelText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    funnelText.setAttribute("x", node.width / 2);
+    funnelText.setAttribute("y", "68");
+    funnelText.setAttribute("text-anchor", "middle");
+    funnelText.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
+    funnelText.setAttribute("font-size", "11");
+    funnelText.setAttribute("font-weight", "600");
+    funnelText.setAttribute("fill", node.borderColor);
+    funnelText.textContent = steps.join("   ➔   ");
+    group.appendChild(funnelText);
+  }
+
+  _renderBranchingAB(group, node, textColor, subColor, isDark) {
+    const stageTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    stageTxt.setAttribute("x", "44");
+    stageTxt.setAttribute("y", "24");
+    stageTxt.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
+    stageTxt.setAttribute("font-size", "13");
+    stageTxt.setAttribute("font-weight", "700");
+    stageTxt.setAttribute("fill", textColor);
+    stageTxt.textContent = node.title;
+    group.appendChild(stageTxt);
+
+    if (node.subtitle) {
+      const sub = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      sub.setAttribute("x", "44");
+      sub.setAttribute("y", "40");
+      sub.setAttribute("font-size", "11");
+      sub.setAttribute("fill", subColor);
+      sub.textContent = node.subtitle;
+      group.appendChild(sub);
+    }
+
+    const midX = node.width / 2;
+    const bA = (node.data && node.data.branchA) ? node.data.branchA : { name: "Branch A: Model A", count: "100 Samples" };
+    const txtA1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    txtA1.setAttribute("x", "24");
+    txtA1.setAttribute("y", "62");
+    txtA1.setAttribute("font-size", "11");
+    txtA1.setAttribute("font-weight", "700");
+    txtA1.setAttribute("fill", "#0284c7");
+    txtA1.textContent = bA.name;
+    group.appendChild(txtA1);
+
+    const txtA2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    txtA2.setAttribute("x", "24");
+    txtA2.setAttribute("y", "76");
+    txtA2.setAttribute("font-size", "10");
+    txtA2.setAttribute("fill", subColor);
+    txtA2.textContent = bA.count;
+    group.appendChild(txtA2);
+
+    const divLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    divLine.setAttribute("x1", midX);
+    divLine.setAttribute("y1", "54");
+    divLine.setAttribute("x2", midX);
+    divLine.setAttribute("y2", "82");
+    divLine.setAttribute("stroke", isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)");
+    group.appendChild(divLine);
+
+    const bB = (node.data && node.data.branchB) ? node.data.branchB : { name: "Branch B: Model B", count: "100 Samples" };
+    const txtB1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    txtB1.setAttribute("x", midX + 16);
+    txtB1.setAttribute("y", "62");
+    txtB1.setAttribute("font-size", "11");
+    txtB1.setAttribute("font-weight", "700");
+    txtB1.setAttribute("fill", "#0284c7");
+    txtB1.textContent = bB.name;
+    group.appendChild(txtB1);
+
+    const txtB2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    txtB2.setAttribute("x", midX + 16);
+    txtB2.setAttribute("y", "76");
+    txtB2.setAttribute("font-size", "10");
+    txtB2.setAttribute("fill", subColor);
+    txtB2.textContent = bB.count;
+    group.appendChild(txtB2);
+
+    const totalTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    totalTxt.setAttribute("x", node.width / 2);
+    totalTxt.setAttribute("y", "96");
+    totalTxt.setAttribute("text-anchor", "middle");
+    totalTxt.setAttribute("font-size", "11");
+    totalTxt.setAttribute("font-weight", "600");
+    totalTxt.setAttribute("fill", textColor);
+    totalTxt.textContent = (node.data && node.data.totalBanner) ? node.data.totalBanner : "Total Samples Evaluated";
+    group.appendChild(totalTxt);
+  }
+
+  _renderExperimentCard(group, node, textColor, subColor) {
+    const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    title.setAttribute("x", "16");
+    title.setAttribute("y", "26");
+    title.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
+    title.setAttribute("font-size", "12");
+    title.setAttribute("font-weight", "700");
+    title.setAttribute("fill", textColor);
+    title.textContent = node.title;
+    group.appendChild(title);
+
+    const inputRef = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    inputRef.setAttribute("x", "16");
+    inputRef.setAttribute("y", "44");
+    inputRef.setAttribute("font-size", "10");
+    inputRef.setAttribute("font-weight", "600");
+    inputRef.setAttribute("fill", subColor);
+    inputRef.textContent = (node.data && node.data.inputRef) ? node.data.inputRef : "Input: Prior Stage";
+    group.appendChild(inputRef);
+
+    const sampleCount = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    sampleCount.setAttribute("x", "16");
+    sampleCount.setAttribute("y", "62");
+    sampleCount.setAttribute("font-size", "10");
+    sampleCount.setAttribute("fill", subColor);
+    sampleCount.textContent = (node.data && node.data.sampleCount) ? node.data.sampleCount : "Evaluation Setup";
+    group.appendChild(sampleCount);
+
+    const qBox = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    qBox.setAttribute("x", "10");
+    qBox.setAttribute("y", "76");
+    qBox.setAttribute("width", node.width - 20);
+    qBox.setAttribute("height", "55");
+    qBox.setAttribute("rx", "6");
+    qBox.setAttribute("fill", "rgba(2, 132, 199, 0.08)");
+    qBox.setAttribute("stroke", "#0284c7");
+    qBox.setAttribute("stroke-width", "1");
+    group.appendChild(qBox);
+
+    const qText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    qText.setAttribute("x", "16");
+    qText.setAttribute("y", "96");
+    qText.setAttribute("font-size", "9.5");
+    qText.setAttribute("font-weight", "600");
+    qText.setAttribute("fill", "#0284c7");
+    qText.textContent = (node.data && node.data.questionPrompt) ? node.data.questionPrompt : "Question: Target verified? — Yes / No";
+    group.appendChild(qText);
+  }
+
+  _renderWideStage(group, node, textColor, subColor) {
+    const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    title.setAttribute("x", node.width / 2);
+    title.setAttribute("y", "28");
+    title.setAttribute("text-anchor", "middle");
+    title.setAttribute("font-family", "'Space Grotesk', system-ui, sans-serif");
+    title.setAttribute("font-size", "13");
+    title.setAttribute("font-weight", "700");
+    title.setAttribute("fill", textColor);
+    title.textContent = node.title;
+    group.appendChild(title);
+
+    const bullets = (node.data && node.data.bullets) ? node.data.bullets : ["Dataset Info", "Metadata", "Resolution"];
+    const sub = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    sub.setAttribute("x", node.width / 2);
+    sub.setAttribute("y", "48");
+    sub.setAttribute("text-anchor", "middle");
+    sub.setAttribute("font-size", "11");
+    sub.setAttribute("fill", subColor);
+    sub.textContent = bullets.join("   •   ");
+    group.appendChild(sub);
   }
 
   _renderConnectors() {

@@ -64,6 +64,11 @@ const CONFIG = {
     EVALUATION: "evaluation",
     PREDICTION: "prediction",
     CALLOUT_NOTE: "callout_note",
-    GENERIC_CARD: "generic_card"
+    GENERIC_CARD: "generic_card",
+    STAGE_CONTAINER: "stage_container",
+    FUNNEL_STAGE: "funnel_stage",
+    BRANCHING_AB: "branching_ab",
+    EXPERIMENT_CARD: "experiment_card",
+    WIDE_STAGE: "wide_stage"
   }
 };
